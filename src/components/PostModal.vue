@@ -1,0 +1,321 @@
+<template>
+    <div id="page-mask">
+
+        <div id="post-modal">
+
+            <div id="post-modal-image-container">
+                <img class="modal-click-box" id="post-modal-image" :src="post.image"/>
+            </div>
+
+            <div class="modal-click-box" id="post-modal-right">
+
+                <div id="post-modal-details">
+
+                    <div id="post-modal-footer">
+
+                        <div id="post-modal-title-div">
+                            <p id="post-modal-title"> {{ post.title }} </p>
+                        </div>
+
+                        <div id="post-modal-text-div">
+                            <p id="post-modal-text"> {{ post.text }}</p>
+                        </div>
+
+                    </div>
+
+                    <div id="post-modal-ratings-container">
+
+                        <div class="post-modal-ratings-half">
+
+                            <div class="post-modal-ratings-quarter">
+                                <p id="post-modal-ratings"> {{ post.media }} </p>
+                            </div>
+
+                            <div id="post-modals-stars" class="post-modal-ratings-quarter" >
+
+                                <i onclick="setRating(this)" id="star1" class="bi bi-star" style="cursor: pointer; z-index: 1;"></i>
+                                <i onclick="setRating(this)" id="star2" class="bi bi-star" style="cursor: pointer; z-index: 1;"></i>
+                                <i onclick="setRating(this)" id="star3" class="bi bi-star" style="cursor: pointer; z-index: 1;"></i>
+                                <i onclick="setRating(this)" id="star4" class="bi bi-star" style="cursor: pointer; z-index: 1;"></i>
+                                <i onclick="setRating(this)" id="star5" class="bi bi-star" style="cursor: pointer; z-index: 1;"></i>
+
+                            </div>
+                        </div>
+
+                        <div class="post-modal-ratings-half">
+
+                            <div class="post-modal-ratings-quarter" style="justify-content: flex-end;">
+                                <p id="post-modal-date"> {{ post.fecha }} </p>
+                            </div>
+
+                            <div class="post-modal-ratings-quarter" style="justify-content: flex-end;">
+                                <p id="post-modal-loc"> {{post.ciudad }}, {{ post.pais }}</p>
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+
+                </div >
+
+                <ul id="post-modal-comments">
+
+                </ul>
+
+                <div id="post-modal-comment-input">
+
+                    <div style="width: 80%; height: 100%;">
+
+                        <textarea onkeydown="sendComment(event)" id="post-modal-comment-input-field" placeholder="Write something nice." autocomplete="off"></textarea>
+
+                    </div>
+
+                    <div id="post-modal-send-button-container">
+                        <span onclick="sendComment(event)" id="post-modal-send-button" class="bi bi-arrow-right-circle"></span>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</template>
+
+
+<script>
+    import $ from 'jquery';
+
+    export default {
+
+        name: "PostModal",
+        
+        props: {
+            postID: null
+        },
+
+        data() {
+            return {
+                post: null,
+                myRating: null,
+            }
+        },    
+
+        async mounted() {
+            this.post = await $.get("http://192.168.0.115:8080/posts/" + this.postID)
+        },
+
+        watch: {
+            myRating: function(val) {
+                
+                for (let i = 1; i<=5; i++) {
+                    let xx = document.getElementById("star" + i);
+                    xx.classList.remove("bi-star-fill");
+                    xx.classList.add("bi-star")
+                }
+
+                for (let  i = 1; i<=5; i++) {
+                    let xx = document.getElementById("star" + i);
+
+                    if (i <= val) {
+                        xx.classList.remove("bi-star");
+                        xx.classList.add("bi-star-fill");
+                    }
+                }
+            }
+        }
+
+
+
+        
+
+    }
+</script>
+
+<style scoped>
+#post-modal {
+    position: absolute;
+    width: auto;
+    height: 70vh;
+    top: 12.5%;
+    display: flex;
+    justify-content: center;
+}
+
+
+#post-modal-image-container {
+    max-height: 100%;
+    max-width: 70%;
+    background-color: #343a40;
+    display: flex;
+    align-items: center;
+}
+
+#post-modal-image {
+    max-width: 100%;
+    max-height: 100%;
+
+    display: block;
+    object-fit: contain;
+    flex-grow: 0;
+}
+
+
+#post-modal-right {
+    width: 15%;
+    background-color: rgb(255,255,255);
+    border-left: 1px solid lightgray;
+    min-width: 230px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    font-family: Arial,serif;
+
+}
+
+#post-modal-details {
+    width: 100%;
+    height:30%;
+    border-bottom: 1px solid lightgray;
+    position: relative;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+#post-modal-footer {
+    width: 100%;
+    height: calc(100% - 2rem);
+    display: flex;
+    flex-direction: column;
+}
+
+#post-modal{
+    width: 100%;
+    overflow-y: scroll;
+}
+
+#post-modal-title-div {
+    width: 100%;
+    height: 1.2rem;
+}
+#post-modal-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+#post-modal-text-div {
+    width: 100%;
+    border-bottom: 1px solid lightcyan;
+    overflow-y: scroll;
+    margin-top: 0.5rem;
+    margin-bottom: 0.7rem;
+}
+
+#post-modal-ratings-container {
+    width: 100%;
+    height: 2rem;
+    bottom: 0;
+    display: flex;
+}
+
+.post-modal-ratings-half {
+    height: 100%;
+    flex: 1;
+}
+
+.post-modal-ratings-quarter {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    align-items: flex-end;
+    font-size: smaller;
+}
+
+#post-modal-comments {
+    list-style: none;
+    overflow-y: scroll;
+    width: 100%;
+    flex-grow: 1;
+    padding: 5px 5px 0 5px;
+    box-sizing: border-box;
+    margin-bottom:  5px;
+}
+
+.comment-pfp {
+
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+}
+
+.username {
+    color: black;
+}
+
+.comment {
+    color: gray;
+}
+
+#post-modal-comment-input {
+    width: 100%;
+    display: flex;
+    border-top: lightgray 1px solid;
+    padding: 5px;
+    box-sizing: border-box;
+    min-height: 3rem;
+}
+
+#post-modal-comment-input-field {
+    width: 100%;
+    height: 100%;
+    border: none;
+    font-size: 1rem;
+    font-family: Arial, serif;
+    resize: none;
+
+}
+
+#post-modal-comment-input-field:focus {
+    outline: none;
+}
+
+#page-mask {
+    background: rgba(0, 0, 0, 0.85);
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+
+    display: flex;
+    justify-content: center;
+
+}
+
+#post-modal-send-button-container {
+    width: 20%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#post-modal-send-button {
+    font-size: 2.2rem ;
+    cursor: pointer;
+    z-index: 3;
+}
+
+#post-modal-send-button:hover {
+    color: cornflowerblue;
+}
+
+
+
+.form-control:focus {
+
+    box-shadow: none;
+}
+</style>
