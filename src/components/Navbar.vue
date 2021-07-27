@@ -9,7 +9,7 @@
 
         <li id="primaryUser" class="userInfo nav-item">
             <img class="userPic" :src="user.image"/>
-            <a class="user-link" :href="'/pruebas/' + user.name"> {{ user.name }} </a>
+            <router-link class="user-link" :to="/users/ + user.name"> {{ user.name }}</router-link>
         </li>
 
         <li class="nav-item">
@@ -31,10 +31,8 @@
             </a>
 
         </li>
-
-
     </ul>
-
+    <router-view></router-view>
 </nav>
 </template>
 

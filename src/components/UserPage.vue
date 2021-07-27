@@ -2,7 +2,7 @@
   <div id="bg">
     <Navbar :user="user" />
     <UserImages @onPostClick="onPostClick"/>
-    <PageMask v-if="selectedImage && !$mq.phone" :postID="selectedImage"/>
+    <PageMask v-if="selectedImage && !$mq.phone" :postID="selectedImage" @exit="closeModal"/>
     <MobileBar v-if="$mq.phone" :user="user"/>
   </div>
     
@@ -42,25 +42,9 @@ export default {
  
     this.user = await $.get(`http://localhost:8080/users/${this.$route.params.name}`);
 
-    // document.addEventListener("click", e => {
-
-    //   let pageMask = document.getElementById("page-mask");
-
-    //   if (pageMask && !e.target.closest(".modal-click-box"))
-    //     this.selectedImage = null;
-
-    // })
-
     document.addEventListener("keydown", e => {
-
-      if (e.key === "Escape") {
-        let pageMask = document.getElementById("page-mask");
-
-        if (pageMask.style.display !== "none")
-          this.selectedImage = null;
-      }
-
-
+      if (e.key === "Escape") 
+        this.closeModal();  
     })
 
   },
@@ -72,6 +56,10 @@ export default {
 
       else
         window.location.href = "/pruebas/posts/" + postID;
+    },
+
+    closeModal() {
+      this.selectedImage = null;
     }
   },
 

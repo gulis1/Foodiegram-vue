@@ -1,9 +1,5 @@
 <template>
-    <div id="page-mask">
-
-        <p>
-           hola
-        </p>
+    <div id="page-mask" v-on:click="exit($event)">
         <PostModal :postID='postID'/>
     </div>
 </template>
@@ -21,13 +17,14 @@
             postID: null
         },
         
-        mounted() {
-            console.log("hola");
-        },
-
-        destroyed() {
-            console.log("adios");
+        methods: {
+            exit(e) {
+                if (!e.target.closest(".modal-click-box"))
+                    this.$emit("exit");
+            }
         }
+
+
     }
 
 </script>

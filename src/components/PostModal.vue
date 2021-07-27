@@ -1,8 +1,8 @@
 <template>
     <div id="post-modal">
 
-        <div id="post-modal-image-container">
-            <img class="modal-click-box" id="post-modal-image" :src="post.image"/>
+        <div class="modal-click-box" id="post-modal-image-container">
+            <img id="post-modal-image" :src="post.image"/>
         </div>
 
         <div class="modal-click-box" id="post-modal-right">
@@ -29,15 +29,7 @@
                             <p id="post-modal-ratings"> {{ post.media }} </p>
                         </div>
 
-                        <div id="post-modals-stars" class="post-modal-ratings-quarter" >
-
-                            <i onclick="setRating(this)" id="star1" class="bi bi-star" style="cursor: pointer; z-index: 1;"></i>
-                            <i onclick="setRating(this)" id="star2" class="bi bi-star" style="cursor: pointer; z-index: 1;"></i>
-                            <i onclick="setRating(this)" id="star3" class="bi bi-star" style="cursor: pointer; z-index: 1;"></i>
-                            <i onclick="setRating(this)" id="star4" class="bi bi-star" style="cursor: pointer; z-index: 1;"></i>
-                            <i onclick="setRating(this)" id="star5" class="bi bi-star" style="cursor: pointer; z-index: 1;"></i>
-
-                        </div>
+                        <RatingStars :postID="this.postID"/>
                     </div>
 
                     <div class="post-modal-ratings-half">
@@ -51,9 +43,6 @@
                         </div>
 
                     </div>
-
-
-
                 </div>
 
             </div >
@@ -65,13 +54,11 @@
             <div id="post-modal-comment-input">
 
                 <div style="width: 80%; height: 100%;">
-
                     <textarea onkeydown="sendComment(event)" id="post-modal-comment-input-field" placeholder="Write something nice." autocomplete="off"></textarea>
-
                 </div>
 
                 <div id="post-modal-send-button-container">
-                    <span onclick="sendComment(event)" id="post-modal-send-button" class="bi bi-arrow-right-circle"></span>
+                    <BIconArrowRightCircle onclick="sendComment(event)" id="post-modal-send-button"/>
                 </div>
 
             </div>
@@ -85,6 +72,8 @@
 
 <script>
     import $ from 'jquery';
+    import RatingStars from './RatingStars.vue'
+    import { BIconArrowRightCircle } from 'bootstrap-vue';
 
     export default {
 
@@ -103,28 +92,12 @@
 
         async mounted() {
             this.post = await $.get("http://localhost:8080/posts/" + this.postID);
-            console.log(this.post);
         },
 
-        watch: {
-            myRating: function(val) {
-                
-                for (let i = 1; i<=5; i++) {
-                    let xx = document.getElementById("star" + i);
-                    xx.classList.remove("bi-star-fill");
-                    xx.classList.add("bi-star")
-                }
-
-                for (let  i = 1; i<=5; i++) {
-                    let xx = document.getElementById("star" + i);
-
-                    if (i <= val) {
-                        xx.classList.remove("bi-star");
-                        xx.classList.add("bi-star-fill");
-                    }
-                }
-            }
-        }
+        components: {
+            BIconArrowRightCircle,
+            RatingStars
+        },
     }
 </script>
 
