@@ -1,87 +1,85 @@
 <template>
-    <div id="page-mask">
+    <div id="post-modal">
 
-        <div id="post-modal">
+        <div id="post-modal-image-container">
+            <img class="modal-click-box" id="post-modal-image" :src="post.image"/>
+        </div>
 
-            <div id="post-modal-image-container">
-                <img class="modal-click-box" id="post-modal-image" :src="post.image"/>
-            </div>
+        <div class="modal-click-box" id="post-modal-right">
 
-            <div class="modal-click-box" id="post-modal-right">
+            <div id="post-modal-details">
 
-                <div id="post-modal-details">
+                <div id="post-modal-footer">
 
-                    <div id="post-modal-footer">
-
-                        <div id="post-modal-title-div">
-                            <p id="post-modal-title"> {{ post.title }} </p>
-                        </div>
-
-                        <div id="post-modal-text-div">
-                            <p id="post-modal-text"> {{ post.text }}</p>
-                        </div>
-
+                    <div id="post-modal-title-div">
+                        <p id="post-modal-title"> {{ post.title }} </p>
                     </div>
 
-                    <div id="post-modal-ratings-container">
-
-                        <div class="post-modal-ratings-half">
-
-                            <div class="post-modal-ratings-quarter">
-                                <p id="post-modal-ratings"> {{ post.media }} </p>
-                            </div>
-
-                            <div id="post-modals-stars" class="post-modal-ratings-quarter" >
-
-                                <i onclick="setRating(this)" id="star1" class="bi bi-star" style="cursor: pointer; z-index: 1;"></i>
-                                <i onclick="setRating(this)" id="star2" class="bi bi-star" style="cursor: pointer; z-index: 1;"></i>
-                                <i onclick="setRating(this)" id="star3" class="bi bi-star" style="cursor: pointer; z-index: 1;"></i>
-                                <i onclick="setRating(this)" id="star4" class="bi bi-star" style="cursor: pointer; z-index: 1;"></i>
-                                <i onclick="setRating(this)" id="star5" class="bi bi-star" style="cursor: pointer; z-index: 1;"></i>
-
-                            </div>
-                        </div>
-
-                        <div class="post-modal-ratings-half">
-
-                            <div class="post-modal-ratings-quarter" style="justify-content: flex-end;">
-                                <p id="post-modal-date"> {{ post.fecha }} </p>
-                            </div>
-
-                            <div class="post-modal-ratings-quarter" style="justify-content: flex-end;">
-                                <p id="post-modal-loc"> {{post.ciudad }}, {{ post.pais }}</p>
-                            </div>
-
-                        </div>
-
-
-
-                    </div>
-
-                </div >
-
-                <ul id="post-modal-comments">
-
-                </ul>
-
-                <div id="post-modal-comment-input">
-
-                    <div style="width: 80%; height: 100%;">
-
-                        <textarea onkeydown="sendComment(event)" id="post-modal-comment-input-field" placeholder="Write something nice." autocomplete="off"></textarea>
-
-                    </div>
-
-                    <div id="post-modal-send-button-container">
-                        <span onclick="sendComment(event)" id="post-modal-send-button" class="bi bi-arrow-right-circle"></span>
+                    <div id="post-modal-text-div">
+                        <p id="post-modal-text"> {{ post.text }}</p>
                     </div>
 
                 </div>
+
+                <div id="post-modal-ratings-container">
+
+                    <div class="post-modal-ratings-half">
+
+                        <div class="post-modal-ratings-quarter">
+                            <p id="post-modal-ratings"> {{ post.media }} </p>
+                        </div>
+
+                        <div id="post-modals-stars" class="post-modal-ratings-quarter" >
+
+                            <i onclick="setRating(this)" id="star1" class="bi bi-star" style="cursor: pointer; z-index: 1;"></i>
+                            <i onclick="setRating(this)" id="star2" class="bi bi-star" style="cursor: pointer; z-index: 1;"></i>
+                            <i onclick="setRating(this)" id="star3" class="bi bi-star" style="cursor: pointer; z-index: 1;"></i>
+                            <i onclick="setRating(this)" id="star4" class="bi bi-star" style="cursor: pointer; z-index: 1;"></i>
+                            <i onclick="setRating(this)" id="star5" class="bi bi-star" style="cursor: pointer; z-index: 1;"></i>
+
+                        </div>
+                    </div>
+
+                    <div class="post-modal-ratings-half">
+
+                        <div class="post-modal-ratings-quarter" style="justify-content: flex-end;">
+                            <p id="post-modal-date"> {{ post.fecha }} </p>
+                        </div>
+
+                        <div class="post-modal-ratings-quarter" style="justify-content: flex-end;">
+                            <p id="post-modal-loc"> {{post.ciudad }}, {{ post.pais }}</p>
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+
+            </div >
+
+            <ul id="post-modal-comments">
+
+            </ul>
+
+            <div id="post-modal-comment-input">
+
+                <div style="width: 80%; height: 100%;">
+
+                    <textarea onkeydown="sendComment(event)" id="post-modal-comment-input-field" placeholder="Write something nice." autocomplete="off"></textarea>
+
+                </div>
+
+                <div id="post-modal-send-button-container">
+                    <span onclick="sendComment(event)" id="post-modal-send-button" class="bi bi-arrow-right-circle"></span>
+                </div>
+
             </div>
-
-
         </div>
+
+
     </div>
+   
 </template>
 
 
@@ -104,7 +102,8 @@
         },    
 
         async mounted() {
-            this.post = await $.get("http://192.168.0.115:8080/posts/" + this.postID)
+            this.post = await $.get("http://localhost:8080/posts/" + this.postID);
+            console.log(this.post);
         },
 
         watch: {
@@ -126,11 +125,6 @@
                 }
             }
         }
-
-
-
-        
-
     }
 </script>
 
@@ -278,20 +272,6 @@
 
 #post-modal-comment-input-field:focus {
     outline: none;
-}
-
-#page-mask {
-    background: rgba(0, 0, 0, 0.85);
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 2;
-
-    display: flex;
-    justify-content: center;
-
 }
 
 #post-modal-send-button-container {

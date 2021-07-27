@@ -30,7 +30,7 @@
         },
 
         async mounted() {
-            this.images = await $.get("http://192.168.0.115:8080/users/fungus/posts");
+            this.images = await $.get("http://localhost:8080/users/fungus/posts");
         },
 
         methods: {
