@@ -8,6 +8,17 @@
     -webkit-user-drag: none;
 }
 
+#bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: fixed linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(https://cdn.discordapp.com/attachments/734750766895595581/848359437122666516/cute-food-icon-doodle-background_57490-171.jpg);
+    box-sizing: border-box;
+    overflow-y: scroll;
+}
+
 .container {
     width: 100%;
     height: auto;
@@ -31,3 +42,12 @@
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
+
+@media screen and (max-width: 1100px) {
+    
+    #bg {
+      background: none;
+      background-color: #343a40;
+    }
+
+  }

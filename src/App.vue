@@ -1,10 +1,6 @@
 <template>
-    <div id="app">
-        <p>
-            <router-link to="/users">User</router-link>
-        </p>
-  <router-view></router-view>
-</div>
+    <div><router-view></router-view></div>
+
 </template>
 
 <script>

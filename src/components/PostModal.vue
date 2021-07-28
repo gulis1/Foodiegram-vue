@@ -34,7 +34,7 @@
 
                     <div class="post-modal-ratings-half">
 
-                        <div class="post-modal-ratings-quarter" style="justify-content: flex-end;">
+                        <div class="post-modal-ratings-quarter" style="Pustify-content: flex-end;">
                             <p id="post-modal-date"> {{ post.fecha }} </p>
                         </div>
 
@@ -71,8 +71,8 @@
 
 
 <script>
-    import $ from 'jquery';
-    import RatingStars from './RatingStars.vue'
+    import { NoAuth } from '../AxiosProfiles.js';
+    import RatingStars from './RatingStars.vue';
     import { BIconArrowRightCircle } from 'bootstrap-vue';
 
     export default {
@@ -91,7 +91,8 @@
         },    
 
         async mounted() {
-            this.post = await $.get("http://localhost:8080/posts/" + this.postID);
+            NoAuth.get("/posts/" + this.postID)
+            .then(res => this.post = res.data)
         },
 
         components: {

@@ -9,12 +9,11 @@
 </template>
 
 <script>
-    import $ from 'jquery';
+    import { NoAuth } from '../AxiosProfiles.js'
     import PostCard from "./PostCard.vue";
 
     const data = {
         images: [],
-        selectedPost: null
     }
 
     export default {
@@ -25,12 +24,17 @@
             return data;
         },
 
+        props: {
+            userName: null
+        },
+
         components: {
             PostCard,
         },
 
         async mounted() {
-            this.images = await $.get("http://localhost:8080/users/fungus/posts");
+            NoAuth.get(`/users/${this.userName}/posts`)
+            .then( res => this.images = res.data);
         },
 
         methods: {

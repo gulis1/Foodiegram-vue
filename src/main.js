@@ -7,6 +7,7 @@ import MQ from 'vue-match-media/src'
 import "@/assets/global.css"
 
 import UserPage from './components/UserPage.vue'
+import LoginPage from './components/LoginPage.vue'
 // import PostPage from './components/PostPage.vue'
 
 Vue.config.productionTip = false
@@ -16,11 +17,12 @@ Vue.use(VueRouter);
 
 const routes = [
   {path: '/users/:name', component: UserPage},
-  // {path: '/posts/:id', component: PostPage}
+  {path: '/login', component: LoginPage}
 ]
 
 const router = new VueRouter({
-  routes
+  routes,
+  mode: 'history'
 })
 
 new Vue({

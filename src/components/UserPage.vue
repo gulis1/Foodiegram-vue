@@ -1,7 +1,7 @@
 <template>
   <div id="bg">
     <Navbar :user="user" />
-    <UserImages @onPostClick="onPostClick"/>
+    <UserImages @onPostClick="onPostClick" :userName="this.user.name"/>
     <PageMask v-if="selectedImage && !$mq.phone" :postID="selectedImage" @exit="closeModal"/>
     <MobileBar v-if="$mq.phone" :user="user"/>
   </div>
@@ -15,7 +15,7 @@ import UserImages from './UserImages.vue';
 import PageMask from './PageMask.vue'
 import MobileBar from './MobileBar.vue'
 
-import $ from 'jquery';
+import  { NoAuth } from '../AxiosProfiles.js'
 
 export default {
   name: 'UserPage',
@@ -39,8 +39,11 @@ export default {
   },
 
   async mounted() {
- 
-    this.user = await $.get(`http://localhost:8080/users/${this.$route.params.name}`);
+    console.log(NoAuth)
+    
+    NoAuth.get(`/users/${this.$route.params.name}`)
+    .then( response => this.user = response.data)
+    .catch(err => {console.log(err)});
 
     document.addEventListener("keydown", e => {
       if (e.key === "Escape") 
@@ -51,7 +54,7 @@ export default {
 
   methods: {
     onPostClick(postID) {
-      if (!window.matchMedia('(orientation: portrait)').matches)
+      if (!window.matchMedia('screen and (max-width: 1100px)').matches)
         this.selectedImage = postID;
 
       else
@@ -69,27 +72,3 @@ export default {
 
 }
 </script>
-
-
-<style scoped>
-
-    #bg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: fixed linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(https://cdn.discordapp.com/attachments/734750766895595581/848359437122666516/cute-food-icon-doodle-background_57490-171.jpg);
-      box-sizing: border-box;
-      overflow-y: scroll;
-    }
-
-    @media screen and (max-width: 1100px) {
-      
-      #bg {
-        background: none;
-        background-color: #343a40;
-      }
-
-    }
-</style>
