@@ -26,7 +26,8 @@
                     <div class="post-modal-ratings-half">
 
                         <div class="post-modal-ratings-quarter">
-                            <p id="post-modal-ratings"> {{ post.media }} </p>
+                            <p id="post-modal-ratings"> {{ post.media }} <BIconStar/> </p>
+                            <p id="post-modal-ratings"> {{ post.numerototalval }} <BIconPerson/> </p>
                         </div>
 
                         <RatingStars :postID="this.postID"/>
@@ -73,7 +74,7 @@
 <script>
     import { NoAuth } from '../AxiosProfiles.js';
     import RatingStars from './RatingStars.vue';
-    import { BIconArrowRightCircle } from 'bootstrap-vue';
+    import { BIconArrowRightCircle, BIconPerson, BIconStar } from 'bootstrap-vue';
 
     export default {
 
@@ -97,7 +98,9 @@
 
         components: {
             BIconArrowRightCircle,
-            RatingStars
+            RatingStars,
+            BIconStar,
+            BIconPerson
         },
     }
 </script>

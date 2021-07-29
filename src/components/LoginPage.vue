@@ -29,18 +29,26 @@
        },
 
        methods: {
-           login() {
-
-                let form = new FormData();
-                form.append('username', this.user);
-                form.append('password', this.password);
-
+           login() {  
                 if (this.user && this.password) {
+                    
+                    let form = new FormData();
+                    form.append('username', this.user);
+                    form.append('password', this.password);
 
                     NoAuth.post('/users/login', form)
-                    .then(res => console.log(res))
-                    .catch(err => console.log(err));
+                    .then(res => {
+                        window.localStorage.setItem('foodiegramAuth', res.data.authToken);
+                        window.localStorage.setItem('foodiegramRefresh', res.data.refreshToken)
+                    })
+                    .catch(() => {
+                        alert("Invalid credentials");
+          
+                    });
                 }
+
+                else
+                    alert("Please input your username and password.")
               
            }
        }

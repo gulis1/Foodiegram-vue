@@ -20,14 +20,11 @@ import  { NoAuth } from '../AxiosProfiles.js'
 export default {
   name: 'UserPage',
 
-  props: {
-    user: null,
-  },
-
   data() {
     return {
       selectedImage: null,
-      window: window
+      window: window,
+      user: null
     }
   },
 
@@ -39,11 +36,10 @@ export default {
   },
 
   async mounted() {
-    console.log(NoAuth)
     
     NoAuth.get(`/users/${this.$route.params.name}`)
     .then( response => this.user = response.data)
-    .catch(err => {console.log(err)});
+    .catch(() => {});
 
     document.addEventListener("keydown", e => {
       if (e.key === "Escape") 
