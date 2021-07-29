@@ -39,7 +39,7 @@ WithAuth.interceptors.response.use(
         return response;
     },
 
-    function (error) {
+    async function (error) {
         
         if (error.response.status === 401 || error.response.status === 403) {
 
@@ -48,22 +48,19 @@ WithAuth.interceptors.response.use(
             // If there's a stored refresh token, a new auth token is
             // requested and the request is retried.
             if (refreshToken) {
+                
+                try {
 
-                NoAuth.get('users/refresh', {params: {refreshToken: refreshToken}})
-                .then(res => {
-                    // The new auth token is stored.
-                    window.localStorage.setItem('foodiegramAuth', res.data.authToken);
-                    
-                    // The old request is sent again with the new auth token.
-                    error.config.headers = {'Authorization': 'Bearer ' + res.data.authToken};
-                    
-                    NoAuth.request(error.config)
-                    .then(res => {return res})
-                    .catch(() => {return Promise.reject(error)});
-                })
-                .catch(() => {
+                    let authToken = await (await NoAuth.get('users/refresh', {params: {refreshToken: refreshToken}})).data.authToken;
+                    window.localStorage.setItem('foodiegramAuth', authToken);
+                    error.config.headers = {'Authorization': 'Bearer ' + authToken};
+
+                    return await NoAuth.request(error.config);
+                }
+
+                catch {
                     return Promise.reject(error);
-                })
+                }
             }
 
         }

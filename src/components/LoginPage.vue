@@ -38,12 +38,12 @@
 
                     NoAuth.post('/users/login', form)
                     .then(res => {
+                        
                         window.localStorage.setItem('foodiegramAuth', res.data.authToken);
                         window.localStorage.setItem('foodiegramRefresh', res.data.refreshToken)
                     })
                     .catch(() => {
                         alert("Invalid credentials");
-          
                     });
                 }
 
