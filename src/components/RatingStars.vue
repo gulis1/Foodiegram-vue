@@ -51,9 +51,10 @@
                 let form = new FormData();
                 form.append('score', score);
                 WithAuth.post(`/posts/${this.postID}/ratings`, form)
+                .then (() => this.$emit('scoreChanged'))
                 .catch(() => window.location.href = '/login');
 
-                this.score = score;
+                this.score = score;                
             }   
         }
 
