@@ -7,8 +7,8 @@
             </div>
 
             <div style="flex-grow: 1; display: flex; word-wrap: anywhere; padding-top: 0.5rem;">
-                <p> {{comment.user + ':&nbsp;'}} </p>
-                <p style='color: gray;'> {{comment.text}}</p>
+                <p> {{comment.user + ':&nbsp;'}} <span style='color: gray;'> {{comment.text}}</span> </p>
+                
             </div>
         </li>
     </ul>
