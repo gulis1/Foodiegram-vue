@@ -1,9 +1,9 @@
 <template>
   <div id="bg">
-    <Navbar :user="user" />
-    <UserImages @onPostClick="onPostClick" :userName="this.user.name"/>
+    <Navbar v-if="user" :user="user" />
+    <UserImages v-if="user" @onPostClick="onPostClick" :userName="this.user.name"/>
     <PageMask v-if="selectedImage && !$mq.phone" :postID="selectedImage" @exit="closeModal"/>
-    <MobileBar v-if="$mq.phone" :user="user"/>
+    <MobileBar v-if="user && $mq.phone" :user="user"/>
   </div>
     
 
@@ -35,7 +35,7 @@ export default {
     MobileBar
   },
 
-  async mounted() {
+  mounted() {
     
     NoAuth.get(`/users/${this.$route.params.name}`)
     .then( response => this.user = response.data)
@@ -54,7 +54,7 @@ export default {
         this.selectedImage = postID;
 
       else
-        window.location.href = "/pruebas/posts/" + postID;
+        window.location.href = "/posts/" + postID;
     },
 
     closeModal() {
@@ -63,7 +63,7 @@ export default {
   },
 
   mq: {
-    phone: '(orientation: portrait)'
+    phone: 'screen and (max-width: 1100px)'
   }
 
 }

@@ -1,7 +1,7 @@
 import Axios from 'axios'
 
 const NoAuth = Axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: 'http://192.168.1.46:8080',
     timeout: 1000,
 });
 
@@ -20,7 +20,7 @@ NoAuth.interceptors.response.use(
 );
 
 const WithAuth = Axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: 'http://192.168.1.46:8080',
     timeout: 1000,
 });
 

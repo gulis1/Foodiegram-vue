@@ -41,6 +41,7 @@
                         
                         window.localStorage.setItem('foodiegramAuth', res.data.authToken);
                         window.localStorage.setItem('foodiegramRefresh', res.data.refreshToken)
+                        window.location.href = `/users/${this.user}`
                     })
                     .catch(() => {
                         alert("Invalid credentials");

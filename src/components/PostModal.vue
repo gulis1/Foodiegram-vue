@@ -1,13 +1,13 @@
 <template>
-    <div id="post-modal">
+    <div id="post-modal" v-if="post">
 
-        <div class="modal-click-box" id="post-modal-image-container">
+        <div v-show="!$mq.phone || !this.showComments" v class="modal-click-box" id="post-modal-image-container">
             <img id="post-modal-image" :src="post.image"/>
         </div>
 
         <div class="modal-click-box" id="post-modal-right">
 
-            <div id="post-modal-details">
+            <div v-show="!$mq.phone || !this.showComments" id="post-modal-details">
 
                 <div id="post-modal-footer">
 
@@ -48,19 +48,24 @@
 
             </div >
 
-            <Comments :postID="this.postID"/>
+            <Comments v-show="!$mq.phone || this.showComments" :postID="this.postID" :key="refreshComments"/>
 
-            <div id="post-modal-comment-input">
+            <div v-if="!$mq.phone || this.showComments" id="post-modal-comment-input">
 
                 <div style="width: 80%; height: 100%;">
-                    <textarea onkeydown="sendComment(event)" id="post-modal-comment-input-field" placeholder="Write something nice." autocomplete="off"></textarea>
+                    <textarea v-model="myComment" id="post-modal-comment-input-field" placeholder="Write something nice." autocomplete="off"></textarea>
                 </div>
 
                 <div id="post-modal-send-button-container">
-                    <BIconArrowRightCircle onclick="sendComment(event)" id="post-modal-send-button"/>
+                    <BIconArrowRightCircle id="post-modal-send-button" @click="sendComment"/>
                 </div>
 
             </div>
+
+            <a v-if="$mq.phone && !this.showComments" id="view-comments-button" @click="showComments = !showComments"> Show comments </a>
+
+            <BIconChevronLeft v-if="$mq.phone && this.showComments" id='chevron' @click="showComments = !showComments"/>
+
         </div>
     </div>
    
@@ -68,10 +73,10 @@
 
 
 <script>
-    import { NoAuth } from '../AxiosProfiles.js';
+    import { NoAuth, WithAuth } from '../AxiosProfiles.js';
     import RatingStars from './RatingStars.vue';
     import Comments from './Comments.vue';
-    import { BIconArrowRightCircle, BIconPerson, BIconStar } from 'bootstrap-vue';
+    import { BIconArrowRightCircle, BIconChevronLeft, BIconPerson, BIconStar } from 'bootstrap-vue';
 
     export default {
 
@@ -85,12 +90,18 @@
             return {
                 post: null,
                 myRating: null,
+                myComment: null,
+                refreshComments: 0,
+                showComments: false
             }
-        },    
+        },  
 
-        async mounted() {
+        mounted() {
             NoAuth.get("/posts/" + this.postID)
-            .then(res => this.post = res.data);
+            .then(res => {
+                this.post = res.data;
+                this.$emit('postLoaded', this.post.user);
+              } );
         },
 
         components: {
@@ -98,17 +109,29 @@
             RatingStars,
             Comments,
             BIconStar,
-            BIconPerson
+            BIconPerson,
+            BIconChevronLeft
+        },
+
+        mq: {
+            phone: 'screen and (max-width: 1100px)'
         },
 
         methods: {
             scoreChanged() {
                 NoAuth.get("/posts/" + this.postID)
                 .then(res => {
-                    console.log(res.data.media)
                     this.post.media = res.data.media;
                     this.post.numerototalval = res.data.numerototalval;
                 });
+            },
+
+            sendComment() {
+                let form = new FormData();
+                form.append('text', this.myComment);
+                WithAuth.post(`/posts/${this.postID}/comments`, form)
+                .then(() => this.refreshComments++)
+                .catch(() => window.location.href = '/login');
             }
         }
     }
@@ -261,10 +284,94 @@
         color: cornflowerblue;
     }
 
-
-
     .form-control:focus {
 
         box-shadow: none;
+    }
+
+    #scrollSeparator {
+        width: 100%;
+        height: 5rem;
+    }
+
+    #view-comments-button {
+        color: cornflowerblue;
+        font-size: 2rem;
+        margin-top: 70px;
+        margin-bottom: 5px;
+        display: block;
+        text-align: center;
+    }
+
+    #chevron {
+        font-size: 2rem;
+        position: fixed;
+        top: 0;
+        left:0;
+        z-index: 15;
+        color: white;
+        margin-top: 0.5rem;
+    }
+
+   @media screen and (max-width: 1100px) {
+
+        #post-modal {
+            position: absolute;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            top: 3rem;
+            width: 100%;
+            bottom: 8rem;
+            padding-bottom: 0;
+            height: unset;
+            overflow-y: scroll;
+        }
+
+        #post-modal-details {
+            font-size: 1.2rem;
+            height: 100%;
+            border-bottom: none;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #post-modal-footer {
+            flex-grow: 1;
+        }
+
+        #post-modal-title-div {
+            width: 100%;
+            height: auto;
+        }
+
+        #post-modal-title{
+            font-size: 2rem;
+        }
+
+        #post-modal-right {
+            min-width: unset;
+            width: 100%;
+            padding: 5px;
+            box-sizing: border-box;
+            flex-grow: 1;
+        }
+
+        #post-modal-image {
+            width: 100%;
+            max-height: 100%;
+            height: auto;
+            display: block;
+            object-fit: contain;
+            object-position: 50% 50%;
+        }
+
+        #post-modal-image-container {
+            max-height: 75%;
+            height: auto;
+            display: block;
+            width: 100%;
+            max-width: unset;
+        }
     }
 </style>

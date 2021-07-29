@@ -1,8 +1,9 @@
 <template>
     <div id="bg">
-        <Navbar :user="user"/>
-        <PostModal :postID="selectedImage"/>
-        <MobileBar v-if="$mq.phone" :user="user"/>
+        <Navbar v-if="this.user" :user="this.user"/>
+        <PostModal v-if="this.postID" :postID="this.postID" @postLoaded='loadUser'/>
+        <MobileBar v-if="this.user && $mq.phone" :user="this.user"/>
+        
     </div>
 </template>
 
@@ -10,6 +11,8 @@
 <script>
     import PostModal from './PostModal.vue';
     import MobileBar from './MobileBar.vue';
+    import Navbar from './Navbar.vue';
+    import { NoAuth } from '../AxiosProfiles.js';
 
     export default {
         name: "PostPage",
@@ -19,12 +22,26 @@
             MobileBar,
         },
 
-        props: {
-            postID: null
+        data: function() {
+            return {
+                postID: null,
+                user: null
+            };
         },
 
-        async mounted() {
-            this.postID = this.$route.params.id;
+        mq: {
+            phone: 'screen and (max-width: 1100px)'
+        },
+
+        mounted() {
+            this.postID = this.$route.params.postID;
+        },
+
+        methods: {
+            async loadUser(user) {
+                let response = await NoAuth.get(`/users/${user}`);
+                this.user = response.data;
+            }
         }
     }
 </script>
