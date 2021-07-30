@@ -65,12 +65,13 @@
     @media screen and (max-width: 800px) {
 
         .user-images {
-            margin: 5px;    
+   
             width: 100%;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             grid-gap: 5px;
-            margin-top: 3rem;
+            margin: 3rem 5px 7rem 3px;
+ 
 
             user-select: none;
             -webkit-touch-callout: none;

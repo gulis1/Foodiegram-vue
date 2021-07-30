@@ -13,7 +13,8 @@
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
     "vue-match-media": "1.0.3",
-    "voe-router": "3.5.2",
+    "vue-router": "3.5.2",
+    "axios": "0.21.1",
     "vuelayers": "0.11.36"
   },
   "devDependencies": {

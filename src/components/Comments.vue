@@ -6,7 +6,7 @@
                 <img class="comment-pfp" alt="pfp" :src="comment.pfp" />
             </div>
 
-            <div style="flex-grow: 1; display: flex; word-wrap: anywhere; padding-top: 0.5rem;">
+            <div class="comment-text">
                 <p> {{comment.user + ':&nbsp;'}} <span style='color: gray;'> {{comment.text}}</span> </p>   
             </div>
         </li>
@@ -49,5 +49,13 @@
         width: 2rem;
         height: 2rem;
         border-radius: 50%;
+    }
+
+    .comment-text {
+        flex-grow: 1;
+        display: flex;
+        word-break: break-word;
+        padding-top: 0.5rem;
+        font-size: 1rem;
     }
 </style>

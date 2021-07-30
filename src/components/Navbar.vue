@@ -7,7 +7,7 @@
             <h1 class="brand">Foodiegram.</h1>
         </li>
 
-        <li id="primaryUser" class="userInfo nav-item">
+        <li v-if="this.user" id="primaryUser" class="userInfo nav-item">
             <img class="userPic" :src="user.image"/>
             <router-link class="user-link" :to="/users/ + user.name"> {{ user.name }}</router-link>
         </li>

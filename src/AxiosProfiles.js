@@ -1,7 +1,7 @@
 import Axios from 'axios'
 
 const NoAuth = Axios.create({
-    baseURL: 'http://192.168.1.46:8080',
+    baseURL: 'http://192.168.0.115:8080',
     timeout: 1000,
 });
 
@@ -20,7 +20,7 @@ NoAuth.interceptors.response.use(
 );
 
 const WithAuth = Axios.create({
-    baseURL: 'http://192.168.1.46:8080',
+    baseURL: 'http://192.168.0.115:8080',
     timeout: 1000,
 });
 
@@ -40,33 +40,33 @@ WithAuth.interceptors.response.use(
     },
 
     async function (error) {
-        
+        console.log(error);
         if (error.response.status === 401 || error.response.status === 403) {
-
+            
             let refreshToken = window.localStorage.getItem('foodiegramRefresh');
 
             // If there's a stored refresh token, a new auth token is
             // requested and the request is retried.
             if (refreshToken) {
-                
-                try {
 
-                    let authToken = await (await NoAuth.get('users/refresh', {params: {refreshToken: refreshToken}})).data.authToken;
+                try {
+                    let response = await NoAuth.get('users/refresh', {params: {refreshToken: refreshToken}});
+                    let authToken = response.data.authToken;
                     window.localStorage.setItem('foodiegramAuth', authToken);
                     error.config.headers = {'Authorization': 'Bearer ' + authToken};
-
+                    
                     return await NoAuth.request(error.config);
                 }
 
                 catch {
+                    
                     return Promise.reject(error);
                 }
             }
 
         }
 
-        else
-            return Promise.reject(error);
+        return Promise.reject(error);
     }
 )
 

@@ -11,10 +11,16 @@ import LoginPage from './components/LoginPage.vue'
 import PostPage from './components/PostPage.vue'
 import UploadPage from './components/UploadPage.vue'
 
+
+import VueLayers from 'vuelayers'
+import 'vuelayers/lib/style.css' // needs css-loader
+
+
 Vue.config.productionTip = false
 
 Vue.use(MQ);
 Vue.use(VueRouter);
+Vue.use(VueLayers)
 
 const routes = [
   {path: '/users/:name', component: UserPage},

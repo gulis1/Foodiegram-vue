@@ -35,7 +35,7 @@
 
                     <div class="post-modal-ratings-half">
 
-                        <div class="post-modal-ratings-quarter" style="Pustify-content: flex-end;">
+                        <div class="post-modal-ratings-quarter" style="justify-content: flex-end;">
                             <p id="post-modal-date"> {{ post.fecha }} </p>
                         </div>
 
@@ -130,7 +130,10 @@
                 let form = new FormData();
                 form.append('text', this.myComment);
                 WithAuth.post(`/posts/${this.postID}/comments`, form)
-                .then(() => this.refreshComments++)
+                .then(() => {
+                    this.refreshComments++;
+                    this.myComment = "";
+                    })
                 .catch(() => window.location.href = '/login');
             }
         }
@@ -209,7 +212,6 @@
     }
     #post-modal-text-div {
         width: 100%;
-        border-bottom: 1px solid lightcyan;
         overflow-y: scroll;
         margin-top: 0.5rem;
         margin-bottom: 0.7rem;
@@ -376,6 +378,17 @@
             display: block;
             width: 100%;
             max-width: unset;
+        }
+
+         #post-modal-comment-input {
+            border: 1px solid black;
+            border-left: none;
+            background-color: white;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            z-index: 50;
+            height: 7rem;
         }
     }
 </style>
