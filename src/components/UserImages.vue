@@ -62,9 +62,10 @@
 
     }
 
-    @media screen and (max-width: 1100px) {
+    @media screen and (max-width: 800px) {
 
         .user-images {
+            margin: 5px;    
             width: 100%;
             display: grid;
             grid-template-columns: repeat(3, 1fr);

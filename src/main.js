@@ -9,6 +9,7 @@ import "@/assets/global.css"
 import UserPage from './components/UserPage.vue'
 import LoginPage from './components/LoginPage.vue'
 import PostPage from './components/PostPage.vue'
+import UploadPage from './components/UploadPage.vue'
 
 Vue.config.productionTip = false
 
@@ -18,7 +19,8 @@ Vue.use(VueRouter);
 const routes = [
   {path: '/users/:name', component: UserPage},
   {path: '/login', component: LoginPage},
-  {path: '/posts/:postID', component: PostPage}
+  {path: '/posts/:postID', component: PostPage},
+  {path: '/upload', component: UploadPage}
 ]
 
 const router = new VueRouter({

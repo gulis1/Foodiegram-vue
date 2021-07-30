@@ -114,7 +114,7 @@
         },
 
         mq: {
-            phone: 'screen and (max-width: 1100px)'
+            phone: 'screen and (max-width: 800px)'
         },
 
         methods: {
@@ -313,7 +313,11 @@
         margin-top: 0.5rem;
     }
 
-   @media screen and (max-width: 1100px) {
+    #chevron:hover {
+        color: cornflowerblue;
+    }
+
+   @media screen and (max-width: 800px) {
 
         #post-modal {
             position: absolute;
@@ -322,7 +326,7 @@
             align-items: center;
             top: 3rem;
             width: 100%;
-            bottom: 8rem;
+            bottom: 7rem;
             padding-bottom: 0;
             height: unset;
             overflow-y: scroll;

@@ -4,12 +4,13 @@
             <img id="logo" src="@/assets/logo.png" alt="Foodiegram">
 
             <div id="inputs">
+                <h3 style="margin-bottom: 2rem;">Log in to Foodiegram</h3>
                 <input v-model="user" type="text" placeholder="Username"/>
                 <input v-model="password" type="password" placeholder="Password"/> 
                 <button @click="login" > <h1>Login</h1> </button>
             </div>
 
-            <h2 id="registerPrompt">Don't have an account? <router-link to="/Register">Register</router-link></h2>
+            <h3 id="registerPrompt">Don't have an account? <router-link to="/Register">Register</router-link></h3>
         </article>
     </div>
 </template>
@@ -93,6 +94,7 @@
         flex-direction: column;
         align-items: center;
         width: 100%;
+        max-width: 500px;
     }
 
     input {
@@ -118,7 +120,7 @@
         margin: 0.5rem;
     }
 
-    @media screen and (max-width: 1100px) {
+    @media screen and (max-width: 800px) {
         
         #logo {
             width: 60%;
@@ -130,11 +132,6 @@
             border-radius: 0;
             aspect-ratio: unset;
         }
-
-        bg {
-            display: block;
-        }
-
     }
 
 </style>

@@ -50,7 +50,7 @@ export default {
 
   methods: {
     onPostClick(postID) {
-      if (!window.matchMedia('screen and (max-width: 1100px)').matches)
+      if (!window.matchMedia('screen and (max-width: 800px)').matches)
         this.selectedImage = postID;
 
       else
@@ -63,7 +63,7 @@ export default {
   },
 
   mq: {
-    phone: 'screen and (max-width: 1100px)'
+    phone: 'screen and (max-width: 800px)'
   }
 
 }

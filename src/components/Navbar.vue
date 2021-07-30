@@ -14,21 +14,21 @@
 
         <li class="nav-item">
 
-            <a class="nav-icon" id="searchButton" onclick="buscar(this)">
+            <router-link to="/search" class="nav-icon">
                 <BIconSearch/>
-            </a>
+            </router-link>
 
-            <a class="nav-icon" href="@{/pruebas/upload}">
+            <router-link to="/upload" class="nav-icon">
                 <BIconUpload/>
-            </a>
-
-            <a class="nav-icon" href="@{/pruebas/friends}">
+            </router-link>
+       
+            <router-link to="/friends" class="nav-icon">
                 <BIconPeople/>
-            </a>
+            </router-link>
 
-            <a class="nav-icon" onclick="deleteCookies()" th:href="@{/pruebas}">
+            <router-link to="/settings" class="nav-icon">
                 <BIconGearWideConnected/>
-            </a>
+            </router-link>
 
         </li>
     </ul>
@@ -136,7 +136,7 @@
         user-select: none;
     }
 
-    @media screen and (max-width: 1100px) {
+    @media screen and (max-width: 800px) {
 
         #primaryUser {
             display: none;

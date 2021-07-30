@@ -30,7 +30,7 @@
         },
 
         mq: {
-            phone: 'screen and (max-width: 1100px)'
+            phone: 'screen and (max-width: 800px)'
         },
 
         mounted() {
