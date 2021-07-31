@@ -15,19 +15,19 @@
         <li class="nav-item">
 
             <router-link to="/search" class="nav-icon">
-                <BIconSearch/>
+                <font-awesome-icon icon="user"/>
             </router-link>
 
             <router-link to="/upload" class="nav-icon">
-                <BIconUpload/>
+                <font-awesome-icon icon="upload"/>
             </router-link>
        
             <router-link to="/friends" class="nav-icon">
-                <BIconPeople/>
+                <font-awesome-icon icon="user-friends"/>
             </router-link>
 
             <router-link to="/settings" class="nav-icon">
-                <BIconGearWideConnected/>
+                <font-awesome-icon icon="cog"/>
             </router-link>
 
         </li>
@@ -37,20 +37,12 @@
 </template>
 
 <script>
-    import { BIconSearch, BIconUpload, BIconPeople, BIconGearWideConnected } from 'bootstrap-vue';
 
     export default {
         name: 'Navbar',
 
-        components: {
-            BIconSearch,
-            BIconUpload,
-            BIconPeople,
-            BIconGearWideConnected
-        },
-
         props: {
-            user: null
+            user: undefined
         },
     }
 

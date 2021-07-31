@@ -24,8 +24,8 @@
 
        data: function() {
            return {
-               user: null,
-               password: null
+               user: undefined,
+               password: undefined
            };
        },
 

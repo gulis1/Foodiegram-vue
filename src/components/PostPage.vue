@@ -24,8 +24,8 @@
 
         data: function() {
             return {
-                postID: null,
-                user: null
+                postID: undefined,
+                user: undefined
             };
         },
 

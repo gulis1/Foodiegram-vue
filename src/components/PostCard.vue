@@ -14,7 +14,7 @@
             <div style="width: 100%; height: 20%;">
                 <p style="text-align: right; height: 100%; font-size: 1rem;">
                     {{ postData.media }}
-                    <BIconStar/>
+                     <font-awesome-icon icon="star"/>
                 </p>
             </div>
 
@@ -24,17 +24,11 @@
 </template>
 
 <script>
-    import { BIconStar } from 'bootstrap-vue';
-
 
 	export default {
 		name: "PostCard",		
         props: {
-            postData: null
-        },
-
-        components: {
-            BIconStar
+            postData: undefined
         },
 
         methods: {

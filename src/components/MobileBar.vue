@@ -12,7 +12,7 @@
         name: "MobileBar",
 
         props: {
-            user: null
+            user: undefined
         },   
     }
 </script>

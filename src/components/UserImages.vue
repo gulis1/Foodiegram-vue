@@ -25,7 +25,7 @@
         },
 
         props: {
-            userName: null
+            userName: undefined
         },
 
         components: {

@@ -22,9 +22,9 @@ export default {
 
   data() {
     return {
-      selectedImage: null,
+      selectedImage: undefined,
       window: window,
-      user: null
+      user: undefined
     }
   },
 
@@ -58,7 +58,7 @@ export default {
     },
 
     closeModal() {
-      this.selectedImage = null;
+      this.selectedImage = undefined;
     }
   },
 

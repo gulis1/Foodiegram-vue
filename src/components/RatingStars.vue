@@ -1,44 +1,38 @@
 <template>
     <div id="post-modals-stars" class="post-modal-ratings-quarter" >
 
-        <BIconStar @click="setRating(1)" class="star" v-if="!this.score || this.score < 1"/>
-        <BIconStarFill @click="setRating(1)" class="star" v-else/>
+        <font-awesome-icon :icon="['far', 'star']" @click="setRating(1)" class="star" v-if="!this.score || this.score < 1"/>
+        <font-awesome-icon :icon="['fas', 'star']"  @click="setRating(1)" class="star" v-else/>
 
-        <BIconStar @click="setRating(2)" class="star" v-if="!this.score || this.score < 2"/>
-        <BIconStarFill @click="setRating(2)" class="star" v-else/>
+        <font-awesome-icon :icon="['far', 'star']" @click="setRating(2)" class="star" v-if="!this.score || this.score < 2"/>
+        <font-awesome-icon :icon="['fas', 'star']" @click="setRating(2)" class="star" v-else/>
 
-        <BIconStar @click="setRating(3)" class="star" v-if="!this.score || this.score < 3"/>
-        <BIconStarFill @click="setRating(3)" class="star" v-else/>
+        <font-awesome-icon :icon="['far', 'star']" @click="setRating(3)" class="star" v-if="!this.score || this.score < 3"/>
+        <font-awesome-icon :icon="['fas', 'star']" @click="setRating(3)" class="star" v-else/>
 
-        <BIconStar @click="setRating(4)" class="star" v-if="!this.score || this.score < 4"/>
-        <BIconStarFill @click="setRating(4)" class="star" v-else/>
+        <font-awesome-icon :icon="['far', 'star']" @click="setRating(4)" class="star" v-if="!this.score || this.score < 4"/>
+        <font-awesome-icon :icon="['fas', 'star']" @click="setRating(4)" class="star" v-else/>
         
-        <BIconStar @click="setRating(5)" class="star" v-if="!this.score || this.score < 5"/>
-        <BIconStarFill @click="setRating(5)" class="star" v-else/>
+        <font-awesome-icon :icon="['far', 'star']" @click="setRating(5)" class="star" v-if="!this.score || this.score < 5"/>
+        <font-awesome-icon :icon="['fas', 'star']" @click="setRating(5)" class="star" v-else/>
     </div>
 </template>
 
 
 <script>
-    import { BIconStar, BIconStarFill } from 'bootstrap-vue'
     import { WithAuth } from '../AxiosProfiles.js'
 
     export default {
         name: "RatingStars",
 
         props: {
-            postID: null
+            postID: undefined
         },
 
         data() {
             return {
-                score: null
+                score: undefined
             }
-        },
-
-        components: {
-            BIconStarFill,
-            BIconStar         
         },
 
         async mounted() {

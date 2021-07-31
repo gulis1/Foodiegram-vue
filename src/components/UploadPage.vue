@@ -6,26 +6,48 @@
 
 		<div class="card">
 			<h2>Upload an image to Foodiegram</h2>
-
-			<input v-model="title" class="formContent" type="text" placeholder="Title"/>
-			<textarea v-model="text" class="formContent" cols="30" rows="10" placeholder="Description"></textarea>
-			<input @change="grabImage($event)" class="formContent" type="file">
+		
+			<input id="title" v-model="title" class="textInput" type="text" placeholder="Title"/>
+			<textarea id="text" v-model="text" class="textInput" placeholder="Description"></textarea>
+			
 			<input v-model="latitude" type="number" step="any" style="display: none;">
 			<input v-model="longitude" type="number" step="any" style="display: none;">
-			<button class="formContent" @click="uploadPost()">Upload</button>
+			
+			<div id="buttons">
+				<input  @change="grabImage($event)" type="file">
+				<button @click="uploadPost()">Upload</button>
+			</div>
+			
+
+			<div id="map">
+				<vl-map  :load-tiles-while-animating="true" :load-tiles-while-interacting="true"
+						data-projection="EPSG:4326" style="height: 400px" @click="changeCoordinates($event)">
+				
+				<vl-view :zoom="2" :min-zoom="2" :enable-rotation="false"></vl-view>
+				
+				<!-- Tries to get the location of the user. -->
+				<vl-geoloc @update:position="geolocPosition = $event">
+				</vl-geoloc>
+		
+				<vl-feature v-if="geolocPosition" id="position-feature">
+					<vl-geom-point :coordinates="geolocPosition"></vl-geom-point>
+					<vl-style-box>
+					<vl-style-icon src="@/assets/marker.png" :scale="1" :anchor="[0.5, 1]"></vl-style-icon>
+					</vl-style-box>
+				</vl-feature>
+				
+				
+
+
+				<vl-layer-tile id="osm">
+					<vl-source-osm></vl-source-osm>
+				</vl-layer-tile>
+				</vl-map>
+
+			</div>
 
 		</div>
-		<!-- <div id="map">
-			<vl-map  :load-tiles-while-animating="true" :load-tiles-while-interacting="true"
-					data-projection="EPSG:4326" style="height: 400px">
-			<vl-view :zoom.sync="zoom" :center.sync="center" :rotation.sync="rotation"></vl-view>
-
-			<vl-layer-tile id="osm">
-				<vl-source-osm></vl-source-osm>
-			</vl-layer-tile>
-			</vl-map>
-
-		</div> -->
+		
 	</div>
 
 </template>
@@ -46,9 +68,10 @@
 			return {
 				title: "",
 				text: "",
-				image: null,
-				latitude: null,
-				longitude: null
+				image: undefined,
+				latitude: undefined,
+				longitude: undefined,
+				geolocPosition: undefined
 			}
 		},
 
@@ -72,18 +95,19 @@
 					}
 					
 
-					form.forEach(x => console.log(x))
-
-
 					WithAuth.post('/posts', form)
 					.then(() => window.location.href = '/users/fungus')
 					.catch(err => console.log(err));
 
 				}
 				
+			},
+
+			changeCoordinates(event) {
+				this.geolocPosition = event.coordinate;
+
 			}
-		}
-      
+		}      
     }
 </script>
 
@@ -97,7 +121,11 @@
 	}
 
 	#map {
-		width: 50vw;
+		width: 95%;
+		overflow: hidden;
+		margin: 1rem;
+		margin-top: auto;
+		border-radius: 30px;
 	}
 
 	.card {
@@ -109,31 +137,74 @@
 		height: 80vh;
 		aspect-ratio: 6/7;
 		font-family: Roboto;
-		font-size: 1.5rem;
 	}
 
 	h2 {
 		margin-top: 2rem;
+		margin-bottom: 2rem;
+	}
+
+	button {
+		
+	}
+
+	.textInput {
+		width: 50%;
+		padding: 5px;
+		box-sizing: border-box;
+		font-family: Roboto;
+		border: 1px solid black;
+		border-radius: 0;
+	}
+
+
+	#title {
+		font-size: 1.5rem;
+		border-bottom: none; 		
 	}
 
 	#text {
 		resize: none;
-		font-family: Roboto;
-		padding: 5px;
+		height: 3rem;
+		border: 1px solid black;
+		font-size: 1.1rem;
 	}
 
-	.formContent {
-		margin: 1rem;
-		font-size: 1.5rem;
+	.textInput:focus {
+		outline: none;
+	}
+	
+	#buttons {
+		display: flex;
+		width: 50%;
+		margin: 2rem 0 1rem 0;
+		justify-content: space-between;
 	}
 
 	@media screen and (max-width: 800px) {
+
+		.textInput {
+			width: 90%;
+		}
+		
 		.card {
-			height: 100%;
+			position: absolute;
+			top: 0;
+			bottom: 7rem;
 			width: 100%;
+			height: unset;
 			aspect-ratio: unset;
 			border-radius: 0;
-			font-family: 1rem;
+			font-size: 1rem;
+			overflow: hidden;
+		}
+
+		#buttons {
+			width: 90%;
+		}
+
+		#map {
+			border-radius: 0;
 		}
 	}
 </style>

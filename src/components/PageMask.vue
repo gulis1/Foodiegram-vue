@@ -14,7 +14,7 @@
         },
 
         props: {
-            postID: null
+            postID: undefined
         },
         
         methods: {

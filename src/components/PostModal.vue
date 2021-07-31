@@ -26,8 +26,8 @@
                     <div class="post-modal-ratings-half">
 
                         <div class="post-modal-ratings-quarter">
-                            <p id="post-modal-ratings"> {{ post.media }} <BIconStar/> </p>
-                            <p id="post-modal-ratings"> {{ post.numerototalval }} <BIconPerson/> </p>
+                            <p id="post-modal-ratings"> {{ post.media }} <font-awesome-icon :icon="['far', 'star']"/> </p>
+                            <p id="post-modal-ratings"> {{ post.numerototalval }} <font-awesome-icon :icon="['far', 'user']"/> </p>
                         </div>
 
                         <RatingStars :postID="this.postID" @scoreChanged='scoreChanged'/>
@@ -57,14 +57,14 @@
                 </div>
 
                 <div id="post-modal-send-button-container">
-                    <BIconArrowRightCircle id="post-modal-send-button" @click="sendComment"/>
+                    <font-awesome-icon :icon="['far', 'arrow-alt-circle-right']" id="post-modal-send-button" @click="sendComment"/>
                 </div>
 
             </div>
 
             <a v-if="$mq.phone && !this.showComments" id="view-comments-button" @click="showComments = !showComments"> Show comments </a>
 
-            <BIconChevronLeft v-if="$mq.phone && this.showComments" id='chevron' @click="showComments = !showComments"/>
+            <font-awesome-icon icon="chevron-left" v-if="$mq.phone && this.showComments" id='chevron' @click="showComments = !showComments"/>
 
         </div>
     </div>
@@ -76,21 +76,20 @@
     import { NoAuth, WithAuth } from '../AxiosProfiles.js';
     import RatingStars from './RatingStars.vue';
     import Comments from './Comments.vue';
-    import { BIconArrowRightCircle, BIconChevronLeft, BIconPerson, BIconStar } from 'bootstrap-vue';
 
     export default {
 
         name: "PostModal",
         
         props: {
-            postID: null
+            postID: undefined
         },
 
         data() {
             return {
-                post: null,
-                myRating: null,
-                myComment: null,
+                post: undefined,
+                myRating: undefined,
+                myComment: undefined,
                 refreshComments: 0,
                 showComments: false
             }
@@ -105,12 +104,8 @@
         },
 
         components: {
-            BIconArrowRightCircle,
             RatingStars,
             Comments,
-            BIconStar,
-            BIconPerson,
-            BIconChevronLeft
         },
 
         mq: {
@@ -277,7 +272,7 @@
     }
 
     #post-modal-send-button {
-        font-size: 2.2rem ;
+        font-size: 1.5rem ;
         cursor: pointer;
         z-index: 3;
     }
@@ -389,6 +384,10 @@
             left: 0;
             z-index: 50;
             height: 7rem;
+        }
+        
+        #post-modal-send-button  {
+            font-size: 3rem;
         }
     }
 </style>

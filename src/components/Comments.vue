@@ -24,7 +24,7 @@
             };
         },
         props: {
-            postID: null
+            postID: undefined
         },
         async mounted() {
             let comments = await NoAuth.get(`posts/${this.postID}/comments`);
