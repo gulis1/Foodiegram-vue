@@ -17,8 +17,8 @@
             
             <ul v-if="this.selectedOption === 'user' || this.selectedOption === 'restaurant'" class="results">
                 <li class="result" :key="result.id" v-for="result in this.results">          
-                    <img :src="result.image" alt="><" style="border-radius: 50%; height: 100%; aspect-ratio: 1/1;">
-                    <p> {{ result.name }} </p>             
+                    <a :href="'users/' + result.name" style="height: 100%;"><img :src="result.image" alt="><" style="border-radius: 50%; height: 100%; aspect-ratio: 1/1;"></a>
+                    <a style="margin-left: 10px; color: white; text-decoration: none;" :href="'users/' + result.name"> {{ result.name }} </a>             
                 </li>
             </ul>
 
@@ -127,6 +127,7 @@
 
     .search-option {
         margin-left: 0.5rem;
+        cursor: pointer;
     }
 
     .selected {
