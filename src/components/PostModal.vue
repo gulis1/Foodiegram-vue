@@ -100,16 +100,12 @@
             .then(res => {
                 this.post = res.data;
                 this.$emit('postLoaded', this.post.user);
-              } );
+              });
         },
 
         components: {
             RatingStars,
             Comments,
-        },
-
-        mq: {
-            phone: 'screen and (max-width: 800px)'
         },
 
         methods: {

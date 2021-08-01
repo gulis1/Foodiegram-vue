@@ -29,10 +29,6 @@
             };
         },
 
-        mq: {
-            phone: 'screen and (max-width: 800px)'
-        },
-
         mounted() {
             this.postID = this.$route.params.postID;
         },

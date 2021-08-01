@@ -15,7 +15,7 @@
         <li class="nav-item">
 
             <router-link to="/search" class="nav-icon">
-                <font-awesome-icon icon="user"/>
+                <font-awesome-icon icon="search"/>
             </router-link>
 
             <router-link to="/upload" class="nav-icon">

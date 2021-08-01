@@ -14,7 +14,7 @@
 			<input v-model="longitude" type="number" step="any" style="display: none;">
 			
 			<div id="buttons">
-				<input  @change="grabImage($event)" type="file">
+				<input @change="grabImage($event)" type="file">
 				<button @click="uploadPost()">Upload</button>
 			</div>
 			
@@ -142,10 +142,6 @@
 	h2 {
 		margin-top: 2rem;
 		margin-bottom: 2rem;
-	}
-
-	button {
-		
 	}
 
 	.textInput {

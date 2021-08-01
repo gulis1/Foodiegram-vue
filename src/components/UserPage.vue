@@ -60,11 +60,6 @@ export default {
     closeModal() {
       this.selectedImage = undefined;
     }
-  },
-
-  mq: {
-    phone: 'screen and (max-width: 800px)'
   }
-
 }
 </script>

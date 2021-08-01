@@ -38,6 +38,7 @@
         async mounted() {
             WithAuth.get(`http://localhost:8080/posts/${this.postID}/ratings/me`)
             .then(res => this.score = res.data.punt)
+            .catch(() => {});
         },
 
         methods: {

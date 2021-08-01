@@ -4,13 +4,14 @@
             <img id="logo" src="@/assets/logo.png" alt="Foodiegram">
 
             <div id="inputs">
-                <h3 style="margin-bottom: 2rem;">Log in to Foodiegram</h3>
+                <h3 style="margin-bottom: 2rem;">Sign in to Foodiegram </h3>
                 <input v-model="user" type="text" placeholder="Username"/>
                 <input v-model="password" type="password" placeholder="Password"/> 
-                <button @click="login" > <h1>Login</h1> </button>
+                <input v-model="email" type="email" placeholder="Email"/> 
+                <button @click="register" > <h1>Sign in</h1> </button>
             </div>
 
-            <h3 id="registerPrompt">Don't have an account? <router-link to="/Register">Sign in</router-link></h3>
+            <h3 id="registerPrompt">Already an account? <router-link to="/login">Login</router-link></h3>
         </article>
     </div>
 </template>
@@ -25,27 +26,28 @@
        data: function() {
            return {
                user: undefined,
-               password: undefined
+               password: undefined,
+               email: undefined
            };
        },
 
        methods: {
-           login() {  
-                if (this.user && this.password) {
+           register() {  
+                if (this.user && this.password && this.email) {
                     
                     let form = new FormData();
                     form.append('username', this.user);
                     form.append('password', this.password);
+                    form.append('email', this.email);
 
-                    NoAuth.post('/users/login', form)
-                    .then(res => {
-                        
+                    NoAuth.post('/users/register', form)
+                    .then(res => {                 
                         window.localStorage.setItem('foodiegramAuth', res.data.authToken);
                         window.localStorage.setItem('foodiegramRefresh', res.data.refreshToken)
                         window.location.href = `/users/${this.user}`
                     })
                     .catch(err => {
-                        alert(err.response.data.error);
+                        alert(err.response.data);
                     });
                 }
 
